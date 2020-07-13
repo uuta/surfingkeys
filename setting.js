@@ -74,46 +74,39 @@ mapkey('ow', '#8Open weblio with alias w', function() {
   });
 });
 
-// Get a title of the current page
-mapkey('ct', '#Get a title with alias ct1', function() {
-  var global = window;
+const copyTitleAndUrl = (format) => {
+  const text = format
+    .replace('%URL%', location.href)
+    .replace('%TITLE%', document.title)
+  Clipboard.write(text)
+}
+const copyHtmlLink = () => {
+  const clipNode = document.createElement('a')
+  const range = document.createRange()
+  const sel = window.getSelection()
+  clipNode.setAttribute('href', location.href)
+  clipNode.innerText = document.title
+  document.body.appendChild(clipNode)
+  range.selectNode(clipNode)
+  sel.removeAllRanges()
+  sel.addRange(range)
+  document.execCommand('copy', false, null)
+  document.body.removeChild(clipNode)
+  Front.showBanner('Ritch Copied: ' + document.title)
+}
 
-  global.COPY_TO_CLIPBOARD = global.COPY_TO_CLIPBOARD || {}
-
-  // URLの情報を取得する
-  global.COPY_TO_CLIPBOARD.getUrlInfo = function () {
-      var title = document.title;
-      // 各フォーマット向けにエスケープしたい文字列を定義して置換
-      var replacedStrings = {
-          ':': '：',
-          '\\[': '［',
-          '\\]': '］',
-          '\\|': '｜'
-      };
-      for (var key in replacedStrings) {
-          title = title.replace(new RegExp(key, 'g'), replacedStrings[key]);
-      }
-      // 各サービスのLink形式のフォーマットにした文字列を返す
-      return '[' + title + ' ' + document.URL + ']';
-  };
-
-  // 文字列を取得するFunctionの結果をクリップボードにコピーする
-  global.COPY_TO_CLIPBOARD.copyToClipboard = function() {
-      // Clipboardにコピーするやりかたを真似た
-      var copyFrom = document.createElement("textarea");
-      copyFrom.textContent = this.getUrlInfo();
-
-      var bodyElm = document.getElementsByTagName("body")[0];
-      bodyElm.appendChild(copyFrom);
-      copyFrom.select();
-
-      var retVal = document.execCommand('copy');
-      bodyElm.removeChild(copyFrom);
-      return retVal;
-  };
-
-  global.COPY_TO_CLIPBOARD.copyToClipboard();
-});
+mapkey('cm', '#7Copy title and link to markdown', () => {
+  copyTitleAndUrl('[%TITLE%](%URL%)')
+})
+mapkey('cb', '#7Copy title and link to scrapbox', () => {
+  copyTitleAndUrl('[%TITLE% %URL%]')
+})
+mapkey('ca', '#7Copy title and link to href', () => {
+  copyTitleAndUrl('<a href="%URL%">%TITLE%</a>')
+})
+mapkey('cr', '#7Copy rich text link', () => {
+  copyHtmlLink()
+})
 
 // Move to next or previous page
 settings.prevLinkRegex = /((<<|prev(ious)?|Prev(ious)?)|<|‹|«|←|前へ|前のページ+)/i;
