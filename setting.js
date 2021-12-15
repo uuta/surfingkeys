@@ -111,3 +111,6 @@ mapkey('cr', '#7Copy rich text link', () => {
 // Move to next or previous page
 settings.prevLinkRegex = /((<<|prev(ious)?|Prev(ious)?)|<|‹|«|←|前へ|前のページ+)/i;
 settings.nextLinkRegex = /((>>|next|Next)|>|›|»|→|次へ|次のページ+)/i;
+
+// Disable keys in specific URL
+unmapAllExcept(['v','f'], /netflix.com/);
