@@ -1,13 +1,13 @@
 // an example to create a new mapping `ctrl-y`
-mapkey('<Ctrl-y>', 'Show me the money', function() {
+api.mapkey('<Ctrl-y>', 'Show me the money', function() {
   Front.showPopup('a well-known phrase uttered by characters in the 1996 film Jerry Maguire (Escape to close).');
 });
 
 // an example to replace `T` with `gt`, click `Default mappings` to see how `T` works.
-map('gt', 'T');
+api.map('gt', 'T');
 
 // an example to remove mapkey `Ctrl-i`
-unmap('<Ctrl-i>');
+api.unmap('<Ctrl-i>');
 
 // set theme
 settings.theme = `
@@ -50,24 +50,24 @@ settings.theme = `
 // click `Save` button to make above settings to take effect.
 
 // Remove mapkey
-unmap('j');
-unmap('k');
-unmap('l');
+api.unmap('j');
+api.unmap('k');
+api.unmap('l');
 
 // an example to replace `T` with `gt`, click `Default mappings` to see how `T` works.
-map('@', 'l');
+api.map('@', 'l');
 
 // Google jp 1年以内
-addSearchAliasX('1', 'Google jp 1年以内', 'https://www.google.co.jp/search?q={0}&tbs=qdr:y,lr:lang_1ja&lr=lang_ja');
-mapkey('o1', '#8Open Search with alias 1', function() {
-Front.openOmnibar({type: "SearchEngine", extra: "1"});
+api.addSearchAlias('1', 'Google jp 1年以内', 'https://www.google.co.jp/search?q={0}&tbs=qdr:y,lr:lang_1ja&lr=lang_ja');
+api.mapkey('o1', '#8Open Search with alias 1', function() {
+  Front.openOmnibar({type: "SearchEngine", extra: "1"});
 });
 
 settings.prevLinkRegex = /((<<|prev(ious)?)|<|‹|«|←|前へ|前のページ+)/i;
 settings.nextLinkRegex = /((>>|next)|>|›|»|→|次へ|次のページ+)/i;
 
 // weblio翻訳
-mapkey('ow', '#8Open weblio with alias w', function() {
+api.mapkey('ow', '#8Open weblio with alias w', function() {
   Clipboard.read(function(response) {
       value = response.data;
       tabOpenLink('https://translate.google.com/translate_tts?ie=UTF-8&client=tw-ob&q=' + value + '&tl=en&total=1&idx=0');
@@ -95,16 +95,16 @@ const copyHtmlLink = () => {
   Front.showBanner('Ritch Copied: ' + document.title)
 }
 
-mapkey('cm', '#7Copy title and link to markdown', () => {
+api.mapkey('cm', '#7Copy title and link to markdown', () => {
   copyTitleAndUrl('[%TITLE%](%URL%)')
 })
-mapkey('cb', '#7Copy title and link to scrapbox', () => {
+api.mapkey('cb', '#7Copy title and link to scrapbox', () => {
   copyTitleAndUrl('[%TITLE% %URL%]')
 })
-mapkey('ca', '#7Copy title and link to href', () => {
+api.mapkey('ca', '#7Copy title and link to href', () => {
   copyTitleAndUrl('<a href="%URL%">%TITLE%</a>')
 })
-mapkey('cr', '#7Copy rich text link', () => {
+api.mapkey('cr', '#7Copy rich text link', () => {
   copyHtmlLink()
 })
 
@@ -113,4 +113,4 @@ settings.prevLinkRegex = /((<<|prev(ious)?|Prev(ious)?)|<|‹|«|←|前へ|前�
 settings.nextLinkRegex = /((>>|next|Next)|>|›|»|→|次へ|次のページ+)/i;
 
 // Disable keys in specific URL
-unmapAllExcept(['v','f'], /netflix.com/);
+api.unmapAllExcept(['v','f'], /netflix.com/);
