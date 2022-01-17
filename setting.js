@@ -1,3 +1,25 @@
+const {
+    aceVimMap,
+    mapkey,
+    imap,
+    imapkey,
+    getClickableElements,
+    vmapkey,
+    map,
+    unmap,
+    vunmap,
+    cmap,
+    addSearchAlias,
+    removeSearchAlias,
+    tabOpenLink,
+    readText,
+    Clipboard,
+    Front,
+    Hints,
+    Visual,
+    RUNTIME
+} = api;
+
 // an example to create a new mapping `ctrl-y`
 api.mapkey('<Ctrl-y>', 'Show me the money', function() {
   Front.showPopup('a well-known phrase uttered by characters in the 1996 film Jerry Maguire (Escape to close).');
@@ -80,6 +102,11 @@ const copyTitleAndUrl = (format) => {
     .replace('%TITLE%', document.title)
   Clipboard.write(text)
 }
+const copyDescAndUrl = (format) => {
+  const text = format
+    .replace('%DESC%', document.getElementsByName('description')[0].content)
+  Clipboard.write(text)
+}
 const copyHtmlLink = () => {
   const clipNode = document.createElement('a')
   const range = document.createRange()
@@ -103,6 +130,9 @@ api.mapkey('cb', '#7Copy title and link to scrapbox', () => {
 })
 api.mapkey('ca', '#7Copy title and link to href', () => {
   copyTitleAndUrl('<a href="%URL%">%TITLE%</a>')
+})
+api.mapkey('cd', '#7Copy description', () => {
+  copyDescAndUrl('%DESC%')
 })
 api.mapkey('cr', '#7Copy rich text link', () => {
   copyHtmlLink()
