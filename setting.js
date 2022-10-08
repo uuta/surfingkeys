@@ -140,10 +140,11 @@ settings.nextLinkRegex = /((>>|next)|>|›|»|→|次へ|次のページ+)/i;
 api.mapkey("ow", "#8Open google translate with alias w", function () {
   Clipboard.read(function (response) {
     value = response.data;
-    //      tabOpenLink('https://translate.google.com/translate_tts?ie=UTF-8&client=tw-ob&q=' + value + '&tl=en&total=1&idx=0');
-    postData("https://example.com/answer", { answer: 42 }).then((data) => {
-      console.log(data); // JSON data parsed by `data.json()` call
-    });
+    tabOpenLink(
+      "https://translate.google.com/translate_tts?ie=UTF-8&client=tw-ob&q=" +
+        value +
+        "&tl=en&total=1&idx=0"
+    );
   });
 });
 
@@ -198,27 +199,3 @@ settings.nextLinkRegex = /((>>|next|Next)|>|›|»|→|次へ|次のページ+)/
 
 // Disable keys in specific URL
 api.unmapAllExcept(["v", "f"], /netflix.com/);
-
-function download_mp3(file_name, data) {
-  const blob = new Blob([data], { type: "text/plain" });
-  // const url = URL.create < em class="Highlight" match = "object" loopnumber = "913486946" style = "padding: 1px; box-shadow: rgb(229, 229, 229) 1px 1px; border-radius: 3px; -webkit-print-color-adjust: exact; background-color: rgb(247, 255, 137); color: rgb(20, 43, 19); font-style: inherit;" > Object</em > URL(blob);
-  const a = document.createElement("a");
-  document.body.appendChild(a);
-  a.download = file_name;
-  a.href = url;
-  a.click();
-  a.remove();
-  // URL.revoke < em class="Highlight" match = "object" loopnumber = "913486946" style = "padding: 1px; box-shadow: rgb(229, 229, 229) 1px 1px; border-radius: 3px; -webkit-print-color-adjust: exact; background-color: rgb(247, 255, 137); color: rgb(20, 43, 19); font-style: inherit;" > Object</em > URL(url);
-}
-
-// https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch
-async function postData(url = "", data = {}) {
-  const response = await fetch(url, {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-      "Content-Disposition": 'attachment; filename="translation.mp3"',
-    },
-  });
-  return response.json(); // parses JSON response into native JavaScript objects
-}
