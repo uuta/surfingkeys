@@ -136,14 +136,26 @@ api.mapkey("o1", "#8Open Search with alias 1", function () {
 settings.prevLinkRegex = /((<<|prev(ious)?)|<|‹|«|←|前へ|前のページ+)/i;
 settings.nextLinkRegex = /((>>|next)|>|›|»|→|次へ|次のページ+)/i;
 
-// Google翻訳
-api.mapkey("ow", "#8Open google translate with alias w", function () {
+// Google Translate (English)
+api.mapkey("ow", "#8Open google translate with alias ow", function () {
   Clipboard.read(function (response) {
     value = response.data;
     tabOpenLink(
       "https://translate.google.com/translate_tts?ie=UTF-8&client=tw-ob&q=" +
         value +
         "&tl=en&total=1&idx=0"
+    );
+  });
+});
+
+// Google Translate (Turkish)
+api.mapkey("ot", "#8Open google translate with alias ot", function () {
+  Clipboard.read(function (response) {
+    value = response.data;
+    tabOpenLink(
+      "https://translate.google.com/translate_tts?ie=UTF-8&client=tw-ob&q=" +
+        value +
+        "&tl=tr&total=1&idx=0"
     );
   });
 });
