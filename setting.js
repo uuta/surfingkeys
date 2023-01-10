@@ -173,19 +173,18 @@ const copyDescAndUrl = (format) => {
   );
   Clipboard.write(text);
 };
-const copyHtmlLink = () => {
-  const clipNode = document.createElement("a");
-  const range = document.createRange();
-  const sel = window.getSelection();
-  clipNode.setAttribute("href", location.href);
-  clipNode.innerText = document.title;
-  document.body.appendChild(clipNode);
-  range.selectNode(clipNode);
-  sel.removeAllRanges();
-  sel.addRange(range);
-  document.execCommand("copy", false, null);
-  document.body.removeChild(clipNode);
-  Front.showBanner("Ritch Copied: " + document.title);
+const copyTitle = () => {
+  const title = document.querySelector("title");
+  const titleText = title.textContent;
+
+  navigator.clipboard.writeText(titleText).then(
+    function () {
+      Front.showBanner("Title Copied: " + title);
+    },
+    function (err) {
+      Front.showBanner("Failed to copy title: ", err);
+    }
+  );
 };
 
 api.mapkey("cm", "#7Copy title and link to markdown", () => {
@@ -200,8 +199,8 @@ api.mapkey("ca", "#7Copy title and link to href", () => {
 api.mapkey("cd", "#7Copy description", () => {
   copyDescAndUrl("%DESC%");
 });
-api.mapkey("cr", "#7Copy rich text link", () => {
-  copyHtmlLink();
+api.mapkey("cr", "#7Copy title", () => {
+  copyTitle();
 });
 
 // Move to next or previous page
