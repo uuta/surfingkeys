@@ -209,4 +209,4 @@ settings.prevLinkRegex =
 settings.nextLinkRegex = /((>>|next|Next)|>|›|»|→|次へ|次のページ+)/i;
 
 // Disable keys in specific URL
-api.unmapAllExcept(["v", "f"], /netflix.com/);
+api.unmapAllExcept(["v", "f"], /netflix.com|youtube.com/);
