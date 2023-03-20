@@ -146,9 +146,7 @@ api.mapkey("ow", "#8Open google translate with alias ow", function () {
       "&tl=en&total=1&idx=0";
 
     tabOpenLink(url);
-    setTimeout(() => {
-      downloadSoundFile(url, value);
-    }, 2000);
+    downloadSoundFile(url, value);
   });
 });
 
@@ -156,11 +154,13 @@ api.mapkey("ow", "#8Open google translate with alias ow", function () {
 api.mapkey("ot", "#8Open google translate with alias ot", function () {
   Clipboard.read(function (response) {
     value = response.data;
-    tabOpenLink(
+    const url =
       "https://translate.google.com/translate_tts?ie=UTF-8&client=tw-ob&q=" +
-        value +
-        "&tl=tr&total=1&idx=0"
-    );
+      encodeURIComponent(value) +
+      "&tl=tr&total=1&idx=0";
+
+    tabOpenLink(url);
+    downloadSoundFile(url, value);
   });
 });
 
