@@ -140,11 +140,15 @@ settings.nextLinkRegex = /((>>|next)|>|›|»|→|次へ|次のページ+)/i;
 api.mapkey("ow", "#8Open google translate with alias ow", function () {
   Clipboard.read(function (response) {
     value = response.data;
-    tabOpenLink(
+    const url =
       "https://translate.google.com/translate_tts?ie=UTF-8&client=tw-ob&q=" +
-        value +
-        "&tl=en&total=1&idx=0"
-    );
+      encodeURIComponent(value) +
+      "&tl=en&total=1&idx=0";
+
+    tabOpenLink(url);
+    setTimeout(() => {
+      downloadSoundFile(url, value);
+    }, 2000);
   });
 });
 
@@ -159,6 +163,23 @@ api.mapkey("ot", "#8Open google translate with alias ot", function () {
     );
   });
 });
+
+/*
+ * download a sound file
+ * @param string url
+ * @param string filename
+ * */
+async function downloadSoundFile(url, filename) {
+  const response = await fetch(url, { mode: "no-cors" });
+  const blob = await response.blob();
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = filename + ".mp3";
+  a.style.display = "none";
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+}
 
 const copyTitleAndUrl = (format) => {
   const text = format
