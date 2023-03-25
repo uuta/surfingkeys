@@ -136,33 +136,63 @@ api.mapkey("o1", "#8Open Search with alias 1", function () {
 settings.prevLinkRegex = /((<<|prev(ious)?)|<|‹|«|←|前へ|前のページ+)/i;
 settings.nextLinkRegex = /((>>|next)|>|›|»|→|次へ|次のページ+)/i;
 
-// Google Translate (English)
 api.mapkey("ow", "#8Open google translate with alias ow", function () {
   Clipboard.read(function (response) {
-    value = response.data;
-    const url =
-      "https://translate.google.com/translate_tts?ie=UTF-8&client=tw-ob&q=" +
-      encodeURIComponent(value) +
-      "&tl=en&total=1&idx=0";
-
-    tabOpenLink(url);
-    downloadSoundFile(url, value);
+    const v = response.data;
+    tabOpenLink(soundURL(v));
+    downloadSoundFile(soundURL(v), v);
+    tabOpenLink(playPhraseURL(v));
+    tabOpenLink(exampleURL(v));
+    tabOpenLink(meaningURL(v));
   });
 });
 
 // Google Translate (Turkish)
 api.mapkey("ot", "#8Open google translate with alias ot", function () {
   Clipboard.read(function (response) {
-    value = response.data;
-    const url =
-      "https://translate.google.com/translate_tts?ie=UTF-8&client=tw-ob&q=" +
-      encodeURIComponent(value) +
-      "&tl=tr&total=1&idx=0";
-
-    tabOpenLink(url);
-    downloadSoundFile(url, value);
+    const v = response.data;
+    const soundURL = soundURL(v, "tr");
+    tabOpenLink(soundURL);
+    downloadSoundFile(soundURL, v);
+    tabOpenLink(playPhraseURL(v));
+    tabOpenLink(exampleURL(v));
+    tabOpenLink(meaningURL(v));
   });
 });
+
+function soundURL(v, lang = "en") {
+  return (
+    "https://translate.google.com/translate_tts?ie=UTF-8&client=tw-ob&q=" +
+    encodeURIComponent(v) +
+    "&tl=" +
+    lang +
+    "&total=1&idx=0"
+  );
+}
+
+function meaningURL(v) {
+  return (
+    "https://www.google.com/search?q=" +
+    encodeURIComponent(v) +
+    "+meaning&oq=" +
+    encodeURIComponent(v) +
+    "+meaning"
+  );
+}
+
+function exampleURL(v) {
+  return (
+    "https://www.google.com/search?q=" +
+    encodeURIComponent(v) +
+    "+example+sentence&oq=" +
+    encodeURIComponent(v) +
+    "+example+sentence"
+  );
+}
+
+function playPhraseURL(v) {
+  return `https://www.playphrase.me/#/search?q=${v}`;
+}
 
 /*
  * download a sound file
