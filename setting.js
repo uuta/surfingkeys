@@ -140,7 +140,6 @@ api.mapkey("ow", "#8Open google translate with alias ow", function () {
   Clipboard.read(function (response) {
     const v = response.data;
     tabOpenLink(soundURL(v));
-    downloadSoundFile(soundURL(v), v);
     tabOpenLink(playPhraseURL(v));
     tabOpenLink(exampleURL(v));
     tabOpenLink(meaningURL(v));
@@ -153,20 +152,26 @@ api.mapkey("ot", "#8Open google translate with alias ot", function () {
     const v = response.data;
     soundURL = soundURL(v, "tr");
     tabOpenLink(soundURL);
-    downloadSoundFile(soundURL, v);
     tabOpenLink(playPhraseURL(v));
     tabOpenLink(exampleURL(v));
     tabOpenLink(meaningURL(v));
   });
 });
 
-// Download a sound file
-api.mapkey("os", "#8Download a sound file with alias os", function () {
+// Open a sound file
+api.mapkey("os", "#8Open a sound with alias os", function () {
   Clipboard.read(function (response) {
     const v = response.data;
     soundURL = soundURL(v);
     tabOpenLink(soundURL);
-    downloadSoundFile(soundURL, v);
+  });
+});
+
+// Download a sound file
+api.mapkey("od", "#8Download a sound file with alias od", function () {
+  Clipboard.read(function (response) {
+    const v = response.data;
+    downloadSoundFile(window.location.href, v);
   });
 });
 
@@ -210,7 +215,7 @@ function playPhraseURL(v) {
  * @param string filename
  * */
 async function downloadSoundFile(url, filename) {
-  const response = await fetch(url, { mode: "no-cors" });
+  const response = await fetch(url);
   const blob = await response.blob();
   const a = document.createElement("a");
   a.href = URL.createObjectURL(blob);
