@@ -151,12 +151,22 @@ api.mapkey("ow", "#8Open google translate with alias ow", function () {
 api.mapkey("ot", "#8Open google translate with alias ot", function () {
   Clipboard.read(function (response) {
     const v = response.data;
-    const soundURL = soundURL(v, "tr");
+    soundURL = soundURL(v, "tr");
     tabOpenLink(soundURL);
     downloadSoundFile(soundURL, v);
     tabOpenLink(playPhraseURL(v));
     tabOpenLink(exampleURL(v));
     tabOpenLink(meaningURL(v));
+  });
+});
+
+// Download a sound file
+api.mapkey("os", "#8Download a sound file with alias os", function () {
+  Clipboard.read(function (response) {
+    const v = response.data;
+    soundURL = soundURL(v);
+    tabOpenLink(soundURL);
+    downloadSoundFile(soundURL, v);
   });
 });
 
