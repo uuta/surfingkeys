@@ -139,10 +139,10 @@ settings.nextLinkRegex = /((>>|next)|>|›|»|→|次へ|次のページ+)/i;
 api.mapkey("ow", "#8Open google translate with alias ow", function () {
   Clipboard.read(function (response) {
     const v = response.data;
-    tabOpenLink(soundURL(v));
     tabOpenLink(playPhraseURL(v));
     tabOpenLink(exampleURL(v));
     tabOpenLink(meaningURL(v));
+    tabOpenLink(soundURL(v));
   });
 });
 
@@ -150,11 +150,10 @@ api.mapkey("ow", "#8Open google translate with alias ow", function () {
 api.mapkey("ot", "#8Open google translate with alias ot", function () {
   Clipboard.read(function (response) {
     const v = response.data;
-    soundURL = soundURL(v, "tr");
-    tabOpenLink(soundURL);
     tabOpenLink(playPhraseURL(v));
     tabOpenLink(exampleURL(v));
     tabOpenLink(meaningURL(v));
+    tabOpenLink(soundURL(v, "tr"));
   });
 });
 
