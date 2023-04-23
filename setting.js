@@ -156,7 +156,7 @@ api.mapkey("ot", "#8Open google translate with alias ot", function () {
   });
 });
 
-// Google Translate (Turkish)
+// Google Translate (Thai)
 api.mapkey("of", "#8Open google translate with alias of", function () {
   Clipboard.read(function (response) {
     const v = response.data;
