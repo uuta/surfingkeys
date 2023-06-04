@@ -167,7 +167,7 @@ api.mapkey("of", "#8Open google translate with alias of", function () {
 });
 
 // Open a sound file
-api.mapkey("os", "#8Open a sound with alias os", function () {
+api.mapkey("ss", "#8Open a sound with alias ss", function () {
   Clipboard.read(function (response) {
     const v = response.data;
     soundURL = soundURL(v);
@@ -175,8 +175,17 @@ api.mapkey("os", "#8Open a sound with alias os", function () {
   });
 });
 
+// Open a sound file with korean
+api.mapkey("sk", "#8Open a sound with alias sk", function () {
+  Clipboard.read(function (response) {
+    const v = response.data;
+    soundURL = soundURL(v, "ko");
+    tabOpenLink(soundURL);
+  });
+});
+
 // Download a sound file
-api.mapkey("od", "#8Download a sound file with alias od", function () {
+api.mapkey("sd", "#8Download a sound file with alias sd", function () {
   Clipboard.read(function (response) {
     const v = response.data;
     downloadSoundFile(window.location.href, v);
